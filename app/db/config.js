@@ -3,13 +3,11 @@ const mongoose = require('mongoose');
 const dbConnection = async () => {
   try {
     await mongoose.connect(process.env.MONGO_CNN, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useCreateIndex: true,
-      useFindAndModify: false,
+      useNewUrlParser: true, // <-- no longer necessary
+      useUnifiedTopology: true, // <-- no longer necessary
     });
 
-    console.log('-- DB ONLINE --');
+    console.log('===-- DATABASE ONLINE ✔️ --===');
   } catch (error) {
     console.log(error);
     throw new Error(
