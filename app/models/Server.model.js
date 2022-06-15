@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 
+/* Database */
 const { dbConnection } = require('../db/config');
 
 class Server {
@@ -10,6 +11,7 @@ class Server {
 
     this.paths = {
       events: '/api/events',
+      users: '/api/users',
     };
 
     // Connect to db
@@ -40,7 +42,12 @@ class Server {
   routes() {
     this.app.use(
       this.paths.events,
-      require('../routes/events.route')
+      require('../routes/events.routes')
+    );
+
+    this.app.use(
+      this.paths.users,
+      require('../routes/users.routes')
     );
   }
 
