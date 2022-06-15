@@ -1,4 +1,7 @@
-import dotenv from 'dotenv';
+require('dotenv').config();
 
-// Configurar dot.env
-dotenv.config();
+const Server = require('./app/models/Server.model');
+
+const server = new Server();
+
+server.listen();
