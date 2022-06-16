@@ -11,7 +11,7 @@ class Server {
 
     this.paths = {
       events: '/api/events',
-      users: '/api/users',
+      users: '/api/auth',
     };
 
     // Connect to db
@@ -47,7 +47,7 @@ class Server {
 
     this.app.use(
       this.paths.users,
-      require('../routes/users.routes')
+      require('../routes/auth.routes')
     );
   }
 
