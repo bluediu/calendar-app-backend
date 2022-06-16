@@ -16,8 +16,7 @@ const login = async (req, res) => {
       });
     }
 
-    // Confirmar los passwords
-    // verificate password
+    // check out password
     const validPassword = bcrypt.compareSync(
       password,
       user.password
@@ -30,7 +29,7 @@ const login = async (req, res) => {
     }
 
     // Generar JWT
-    const token = await generateJWT(user.id, user.name);
+    const token = await generateJWT(user.name, user.id);
 
     return res.json({
       ok: true,
@@ -60,7 +59,7 @@ const signIn = async (req, res) => {
     await user.save();
 
     // Generate JWT
-    const token = await generateJWT(user.id, user.name);
+    const token = await generateJWT(user.name, user.id);
 
     return res.status(201).json({
       user,
