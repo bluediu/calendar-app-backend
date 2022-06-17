@@ -1,4 +1,8 @@
-const { signIn, login } = require('./auth.controller');
+const {
+  signIn,
+  login,
+  renewToken,
+} = require('./auth.controller');
 
 const {
   getEvents,
@@ -11,6 +15,7 @@ module.exports = {
   /* Auth */
   signIn,
   login,
+  renewToken,
 
   /* Events */
   getEvents,
