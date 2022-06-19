@@ -57,7 +57,7 @@ const updateEvent = async (req, res = response) => {
 
     const newEvent = {
       ...req.body,
-      user: eventId,
+      user: decodedToken.uid,
     };
 
     const eventUpdated = await Event.findByIdAndUpdate(

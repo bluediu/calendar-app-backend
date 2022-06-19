@@ -17,7 +17,7 @@ const {
 
 const router = Router();
 
-router.get('/', getEvents);
+router.get('/', validateJWT, getEvents);
 
 router.post(
   '/create',
@@ -39,7 +39,6 @@ router.put(
     check('title', 'Title is required').notEmpty(),
     check('start', 'Start date is required').notEmpty(),
     check('end', 'End date is required').notEmpty(),
-    check('user', 'That ID is not valid').isMongoId(),
     validateFields,
   ],
   updateEvent
