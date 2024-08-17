@@ -1,14 +1,8 @@
 export class LoginUserDto {
   private constructor(public email: string, public password: string) {}
 
-  static login(object: { [key: string]: any }): [string?, LoginUserDto?] {
+  static login(object: { [key: string]: any }): LoginUserDto {
     const { email, password } = object;
-
-    // TODO: Remove this
-    // if (!email) return ['Missing email'];
-    // if (!Validators.email.test(email)) return ['Email is not valid'];
-    // if (!password) return ['Missing password'];
-
-    return [undefined, new LoginUserDto(email.toLowerCase(), password)];
+    return new LoginUserDto(email.toLowerCase(), password);
   }
 }
