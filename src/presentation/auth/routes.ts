@@ -16,8 +16,8 @@ export class AuthRoutes {
     const router = Router();
 
     const datasource = new AuthDatasourceImpl();
-    const repository = new AuthRepositoryImpl(datasource);
-    const controller = new AuthController(repository);
+    const authRepository = new AuthRepositoryImpl(datasource);
+    const controller = new AuthController(authRepository);
 
     router.post(
       '/login',
