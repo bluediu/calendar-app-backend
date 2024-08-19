@@ -29,9 +29,16 @@ export class AuthRoutes {
       controller.loginUser
     );
 
-    router.post('/sign-in', (req, res) => {
-      res.json({ ok: true });
-    });
+    router.post(
+      '/sign-in',
+      [
+        check('name', 'Name cannot be empty').notEmpty(),
+        check('email', 'Invalid email format').isEmail(),
+        check('password', 'Password cannot be empty').notEmpty(),
+        validateFields,
+      ],
+      controller.signInUser
+    );
 
     return router;
   }

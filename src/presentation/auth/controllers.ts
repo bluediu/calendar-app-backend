@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
 
 /* Domain */
-import { LoginUserDto } from '../../domain/dtos';
 import { CustomError } from '../../domain/errors';
-import { LoginUser } from '../../domain/use-cases/auth';
 import { AuthRepository } from '../../domain/repositories';
+import { LoginUserDto, SignInUserDto } from '../../domain/dtos';
+import { LoginUser, SignInUser } from '../../domain/use-cases/auth';
 
 export class AuthController {
   constructor(private readonly authRepository: AuthRepository) {}
@@ -20,10 +20,17 @@ export class AuthController {
   loginUser = (req: Request, res: Response) => {
     const loginUserDto = LoginUserDto.login(req.body);
 
-    console.log('this.authRepository', this.authRepository);
-
     new LoginUser(this.authRepository)
       .execute(loginUserDto)
+      .then((data) => res.json(data))
+      .catch((err) => this.handleError(err, res));
+  };
+
+  signInUser = (req: Request, res: Response) => {
+    const signInUserDto = SignInUserDto.create(req.body);
+
+    new SignInUser(this.authRepository)
+      .execute(signInUserDto)
       .then((data) => res.json(data))
       .catch((err) => this.handleError(err, res));
   };

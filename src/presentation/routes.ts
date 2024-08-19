@@ -2,6 +2,7 @@ import { Router } from 'express';
 
 import { AuthRoutes } from './auth';
 
+// https://github.com/AungMyoKyaw/redoc-express#readme
 export class AppRoutes {
   static get routes(): Router {
     const router = Router();

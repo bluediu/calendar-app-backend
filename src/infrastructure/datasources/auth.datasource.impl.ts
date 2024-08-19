@@ -5,7 +5,7 @@ import { BcryptAdapter } from '../../config';
 import { UserModel } from '../../data/mongodb';
 
 /* Domain */
-import { LoginUserDto } from '../../domain/dtos';
+import { LoginUserDto, SignInUserDto } from '../../domain/dtos';
 import { CustomError } from '../../domain/errors';
 import { UserEntity } from '../../domain/entities';
 import { AuthDatasource } from '../../domain/datasources';
@@ -35,6 +35,30 @@ export class AuthDatasourceImpl implements AuthDatasource {
       const passwordCorrect = this.comparePw(password, user.password);
 
       if (!passwordCorrect) throw CustomError.badRequest(msg);
+
+      return UserMapper.userEntityFromObject(user);
+    } catch (error: unknown) {
+      if (error instanceof CustomError) {
+        throw error;
+      }
+
+      throw CustomError.internalServer();
+    }
+  }
+
+  async signIn(signInUserDto: SignInUserDto): Promise<UserEntity> {
+    const { name, email, password } = signInUserDto;
+
+    try {
+      const exists = await UserModel.findOne({ email });
+      if (exists) throw CustomError.badRequest('User already exists');
+
+      const user = await UserModel.create({
+        name,
+        email,
+        password: this.hashPw(password),
+      });
+      await user.save();
 
       return UserMapper.userEntityFromObject(user);
     } catch (error: unknown) {
