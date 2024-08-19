@@ -1,1 +1,2 @@
-export * from './auth.datasources';
+export * from './auth.datasource';
+export * from './event.datasource';
