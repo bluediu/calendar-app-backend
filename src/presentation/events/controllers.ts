@@ -3,14 +3,22 @@ import { Request, Response } from 'express';
 /* Domain */
 import { CreateEventDto } from '../../domain/dtos';
 import { EventRepository } from '../../domain/repositories';
+import { CreateEvent } from '../../domain/use-cases/events';
 
-export class EventController {
-  constructor(private readonly eventRepository: EventRepository) {}
+/* Utils */
+import { ErrorHandler } from '../../utils';
+
+export class EventController extends ErrorHandler {
+  constructor(private readonly eventRepository: EventRepository) {
+    super();
+  }
 
   createEvent = (req: Request, res: Response) => {
     const createEventDto = CreateEventDto.create(req.body);
 
-    // TODO: Use-case
-    res.json({ ok: true });
+    new CreateEvent(this.eventRepository)
+      .execute(createEventDto)
+      .then((data) => res.json(data))
+      .catch((err) => this.handleError(err, res));
   };
 }
