@@ -5,19 +5,12 @@ export class CreateEventDto {
     public notes: string,
     public start: Date,
     public end: Date,
-    public user: number
+    public user: string
   ) {}
 
   static create(object: { [key: string]: any }): CreateEventDto {
-    const { id, name, notes, start, end, user } = object;
+    const { id, title, notes, start, end, user } = object;
 
-    return new CreateEventDto(
-      id,
-      name.trim(),
-      notes.name.trim(),
-      start,
-      end,
-      user
-    );
+    return new CreateEventDto(id, title.trim(), notes.trim(), start, end, user);
   }
 }

@@ -5,6 +5,6 @@ export class EventEntity {
     public notes: string,
     public start: Date,
     public end: Date,
-    public user: number
+    public user: string
   ) {}
 }

@@ -5,10 +5,10 @@ import { BcryptAdapter } from '../../config';
 import { UserModel } from '../../data/mongodb';
 
 /* Domain */
-import { LoginUserDto, SignInUserDto } from '../../domain/dtos';
 import { CustomError } from '../../domain/errors';
 import { UserEntity } from '../../domain/entities';
 import { AuthDatasource } from '../../domain/datasources';
+import { LoginUserDto, SignInUserDto } from '../../domain/dtos';
 
 /* Mappers */
 import { UserMapper } from '../mappers';
