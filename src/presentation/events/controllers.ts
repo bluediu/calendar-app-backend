@@ -1,9 +1,13 @@
 import { Request, Response } from 'express';
 
 /* Domain */
-import { CreateEventDto } from '../../domain/dtos';
 import { EventRepository } from '../../domain/repositories';
-import { CreateEvent, ListEvents } from '../../domain/use-cases/events';
+import { CreateEventDto, UpdateEventDto } from '../../domain/dtos';
+import {
+  CreateEvent,
+  ListEvents,
+  UpdateEvent,
+} from '../../domain/use-cases/events';
 
 /* Utils */
 import { ErrorHandler } from '../../utils';
@@ -25,6 +29,19 @@ export class EventController extends ErrorHandler {
 
     new CreateEvent(this.eventRepository)
       .execute(createEventDto)
+      .then((data) => res.json(data))
+      .catch((err) => this.handleError(err, res));
+  };
+
+  updateEvent = (req: Request, res: Response) => {
+    const props = {
+      id: req.params.uid,
+      token: req.header('x-token')!,
+      event: UpdateEventDto.update(req.body),
+    };
+
+    new UpdateEvent(this.eventRepository)
+      .execute(props)
       .then((data) => res.json(data))
       .catch((err) => this.handleError(err, res));
   };

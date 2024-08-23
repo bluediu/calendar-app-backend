@@ -1,3 +1,5 @@
+import { UpdateEventDto } from '../domain/dtos';
+
 export interface IEvent {
   id: string;
   title: string;
@@ -5,4 +7,10 @@ export interface IEvent {
   start: Date;
   end: Date;
   user: string;
+}
+
+export interface IUpdateProps {
+  id: string;
+  token: string;
+  event: UpdateEventDto;
 }

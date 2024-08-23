@@ -32,6 +32,17 @@ export class EventRoutes {
       ],
       controller.createEvent
     );
+    router.put(
+      '/update/:uid',
+      [
+        check('title', 'Title cannot be empty').notEmpty(),
+        check('notes', 'Description cannot be empty').notEmpty(),
+        check('start', 'Invalid start date format').isISO8601(),
+        check('end', 'Invalid end date format').isISO8601(),
+        validateFields,
+      ],
+      controller.updateEvent
+    );
 
     return router;
   }

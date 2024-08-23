@@ -1,6 +1,8 @@
+/* Domain */
 import { EventEntity } from '../../domain/entities';
 
-type TDynamicObject = { [key: string]: any };
+/* Types */
+import { TDynamicObject } from '../../types';
 
 export class EventMapper {
   static asInstance(object: TDynamicObject): EventEntity {
