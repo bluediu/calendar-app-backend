@@ -23,6 +23,7 @@ export class EventRoutes {
     router.post(
       '/create',
       [
+        TokenMiddleware.validateJwt,
         check('title', 'Title cannot be empty').notEmpty(),
         check('notes', 'Description cannot be empty').notEmpty(),
         check('start', 'Invalid start date format').isISO8601(),
@@ -35,6 +36,7 @@ export class EventRoutes {
     router.put(
       '/update/:uid',
       [
+        TokenMiddleware.validateJwt,
         check('title', 'Title cannot be empty').notEmpty(),
         check('notes', 'Description cannot be empty').notEmpty(),
         check('start', 'Invalid start date format').isISO8601(),
@@ -42,6 +44,11 @@ export class EventRoutes {
         validateFields,
       ],
       controller.updateEvent
+    );
+    router.delete(
+      '/delete/:uid',
+      TokenMiddleware.validateJwt,
+      controller.deleteEvent
     );
 
     return router;

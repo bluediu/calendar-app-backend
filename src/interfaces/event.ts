@@ -14,3 +14,5 @@ export interface IUpdateProps {
   token: string;
   event: UpdateEventDto;
 }
+
+export type IDeleteProps = Omit<IUpdateProps, 'event'>;

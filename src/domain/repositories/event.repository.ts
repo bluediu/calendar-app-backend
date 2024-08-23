@@ -2,7 +2,7 @@ import { EventEntity } from '../entities';
 
 import { CreateEventDto } from '../dtos';
 
-import { IUpdateProps } from '../../interfaces';
+import { IUpdateProps, IDeleteProps } from '../../interfaces';
 
 export abstract class EventRepository {
   abstract listEvents(): Promise<EventEntity[]>;
@@ -10,4 +10,6 @@ export abstract class EventRepository {
   abstract createEvent(event: CreateEventDto): Promise<EventEntity>;
 
   abstract updateEvent(params: IUpdateProps): Promise<EventEntity>;
+
+  abstract deleteEvent(params: IDeleteProps): Promise<void>;
 }

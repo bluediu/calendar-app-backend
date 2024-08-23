@@ -14,9 +14,26 @@ import { EventMapper } from '../mappers';
 
 /* Interfaces & Types */
 import { TDynamicObject } from '../../types';
-import { IUpdateProps } from '../../interfaces';
+import { IUpdateProps, IDeleteProps } from '../../interfaces';
 
 export class EventDatasourceImpl implements EventDatasource {
+  private async _validateContext(
+    eventId: string,
+    token: string
+  ): Promise<string> {
+    const decoded = jwtDecode<{ id: string }>(token);
+
+    const event = await EventModel.findOne({ _id: eventId });
+    if (!event) throw CustomError.badRequest('Event does not exist.');
+
+    // Can change event
+    if (event.user.toString() !== decoded.id) {
+      throw CustomError.forbidden('You cannot change this event.');
+    }
+
+    return decoded.id;
+  }
+
   async listEvents(): Promise<EventEntity[]> {
     try {
       const events = await EventModel.find();
@@ -49,27 +66,32 @@ export class EventDatasourceImpl implements EventDatasource {
   }
 
   async updateEvent(params: IUpdateProps): Promise<EventEntity> {
-    console.log('params', params);
-
     const { token, id, event: data } = params;
 
     try {
-      const decoded = jwtDecode<{ uid: string }>(token);
+      const userId = await this._validateContext(id, token);
 
-      const event = await EventModel.findOne({ _id: id });
-      if (!event) throw CustomError.badRequest('Event does not exist.');
-
-      // Can change event
-      if (event.user.toString() !== decoded.uid) {
-        throw CustomError.forbidden('You cannot update this event.');
-      }
-
-      const newEvent = { ...data, user: decoded.uid };
+      const newEvent = { ...data, user: userId };
       const updatedEvent = await EventModel.findByIdAndUpdate(id, newEvent, {
         new: true,
       });
 
       return EventMapper.asInstance(updatedEvent as TDynamicObject);
+    } catch (error: unknown) {
+      if (error instanceof CustomError) {
+        throw error;
+      }
+
+      throw CustomError.internalServer();
+    }
+  }
+
+  async deleteEvent(params: IDeleteProps): Promise<void> {
+    const { token, id } = params;
+
+    try {
+      await this._validateContext(id, token);
+      await EventModel.findByIdAndDelete(id);
     } catch (error: unknown) {
       if (error instanceof CustomError) {
         throw error;
