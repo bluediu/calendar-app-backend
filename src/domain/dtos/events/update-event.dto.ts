@@ -1,3 +1,5 @@
+import { TDynamicObject } from '../../../types';
+
 export class UpdateEventDto {
   private constructor(
     public id: string,
@@ -8,7 +10,7 @@ export class UpdateEventDto {
     public user: string
   ) {}
 
-  static update(object: { [key: string]: any }): UpdateEventDto {
+  static update(object: TDynamicObject): UpdateEventDto {
     const { id, title, notes, start, end, user } = object;
 
     return new UpdateEventDto(id, title.trim(), notes.trim(), start, end, user);

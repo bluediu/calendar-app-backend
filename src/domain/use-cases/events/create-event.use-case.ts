@@ -5,16 +5,16 @@ import { CreateEventDto } from '../../dtos';
 import { EventRepository } from '../../repositories';
 
 /* Interfaces */
-import { IEvent } from '../../../interfaces';
+import { EventEntity } from '../../entities';
 
 interface ICreateEventUseCase {
-  execute(createEventDto: CreateEventDto): Promise<IEvent>;
+  execute(createEventDto: CreateEventDto): Promise<EventEntity>;
 }
 
 export class CreateEvent implements ICreateEventUseCase {
   constructor(private readonly eventRepository: EventRepository) {}
 
-  async execute(createEventDto: CreateEventDto): Promise<IEvent> {
+  async execute(createEventDto: CreateEventDto): Promise<EventEntity> {
     const event = await this.eventRepository.createEvent(createEventDto);
 
     return event;

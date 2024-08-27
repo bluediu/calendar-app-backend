@@ -78,7 +78,10 @@ export class AuthDatasourceImpl implements AuthDatasource {
     const payload: RenewTokenDto & { token?: string } = renewTokenDto;
 
     try {
-      const token = await this.signToken(payload);
+      const token = await this.signToken({
+        id: payload.id,
+        name: payload.name,
+      });
 
       if (!token) throw CustomError.internalServer('Error generating token');
 

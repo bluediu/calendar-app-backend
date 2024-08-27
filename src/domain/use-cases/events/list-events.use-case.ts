@@ -2,16 +2,16 @@
 import { EventRepository } from '../../repositories';
 
 /* Interfaces */
-import { IEvent } from '../../../interfaces';
+import { EventEntity } from '../../entities';
 
 interface IListEventsUseCase {
-  execute(): Promise<IEvent[]>;
+  execute(): Promise<EventEntity[]>;
 }
 
 export class ListEvents implements IListEventsUseCase {
   constructor(private readonly eventRepository: EventRepository) {}
 
-  async execute(): Promise<IEvent[]> {
+  async execute(): Promise<EventEntity[]> {
     const events = await this.eventRepository.listEvents();
     return events;
   }

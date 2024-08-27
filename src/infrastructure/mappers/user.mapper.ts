@@ -11,7 +11,7 @@ export class UserMapper {
     return new UserEntity(_id, name, email, password);
   }
 
-  static userTokenAsEntity(object: { [key: string]: any }) {
+  static userTokenAsEntity(object: TDynamicObject) {
     const { id, name, token } = object;
 
     return new TokenEntity(id, name, token);

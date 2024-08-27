@@ -1,3 +1,10 @@
+interface IUserResponse {
+  _id: string;
+  name: string;
+  email: string;
+  password: string;
+}
+
 export class EventEntity {
   constructor(
     public id: string,
@@ -5,6 +12,6 @@ export class EventEntity {
     public notes: string,
     public start: Date,
     public end: Date,
-    public user: string
+    public user: IUserResponse
   ) {}
 }

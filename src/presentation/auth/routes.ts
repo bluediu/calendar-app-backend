@@ -2,7 +2,7 @@ import { Router } from 'express';
 
 /* Middlewares */
 import { check } from 'express-validator';
-import { validateFields } from '../middlewares';
+import { TokenMiddleware, validateFields } from '../middlewares';
 
 /* Infrastructure */
 import { AuthDatasourceImpl } from '../../infrastructure/datasources';
@@ -38,6 +38,12 @@ export class AuthRoutes {
         validateFields,
       ],
       controller.signInUser
+    );
+
+    router.get(
+      '/renew-token',
+      TokenMiddleware.validateJwt,
+      controller.renewToken
     );
 
     return router;
