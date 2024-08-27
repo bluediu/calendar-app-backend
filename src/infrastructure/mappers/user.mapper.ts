@@ -1,9 +1,19 @@
-import { UserEntity } from '../../domain/entities';
+/* Domain */
+import { TokenEntity, UserEntity } from '../../domain/entities';
+
+/* Types */
+import { TDynamicObject } from '../../types';
 
 export class UserMapper {
-  static userEntityFromObject(object: { [key: string]: any }) {
+  static userAsEntity(object: TDynamicObject) {
     const { _id, name, email, password } = object;
 
     return new UserEntity(_id, name, email, password);
+  }
+
+  static userTokenAsEntity(object: { [key: string]: any }) {
+    const { id, name, token } = object;
+
+    return new TokenEntity(id, name, token);
   }
 }

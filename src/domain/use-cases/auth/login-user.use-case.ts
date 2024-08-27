@@ -24,7 +24,7 @@ export class LoginUser implements ILoginUseCase {
 
   async execute(loginUserDto: LoginUserDto): Promise<IUserToken> {
     const user = await this.authRepository.login(loginUserDto);
-    const token = await this.signToken({ id: user.id });
+    const token = await this.signToken({ id: user.id, name: user.name });
 
     if (!token) throw CustomError.internalServer('Error generating token');
 
