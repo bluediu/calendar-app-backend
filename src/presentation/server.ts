@@ -12,7 +12,7 @@ export class Server {
   private readonly routes: Router;
 
   constructor(options: IOptions) {
-    const { port = 8080, routes } = options;
+    const { port = parseInt(process.env.PORT || '8080'), routes } = options;
 
     this.port = port;
     this.routes = routes;
