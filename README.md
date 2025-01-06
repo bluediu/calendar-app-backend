@@ -14,3 +14,7 @@ Arquitecture: Implementation of services (API) & intended to be a scalable app t
 - JWT (jsonwebtokens)
 - MongoDB
 - Mongoose
+
+### Backend project 🗝️
+
+https://github.com/bluediu/calendar-app-backend
