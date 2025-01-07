@@ -36,7 +36,7 @@ export class EventDatasourceImpl implements EventDatasource {
 
   async listEvents(): Promise<EventEntity[]> {
     try {
-      const events = await EventModel.find();
+      const events = await EventModel.find().populate('user');
       return EventMapper.asInstances(events);
     } catch (error: unknown) {
       if (error instanceof CustomError) {

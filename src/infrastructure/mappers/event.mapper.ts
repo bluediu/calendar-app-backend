@@ -12,16 +12,21 @@ export class EventMapper {
   }
 
   static asInstances(arr: TDynamicObject[]): EventEntity[] {
-    return arr.map(
-      (obj: TDynamicObject) =>
-        new EventEntity(
-          obj._id,
-          obj.title,
-          obj.notes,
-          obj.start,
-          obj.end,
-          obj.user
-        )
-    );
+    return arr.map((obj: TDynamicObject) => {
+      const user = {
+        _id: obj.user._id,
+        name: obj.user.name,
+        email: obj.user.email,
+      };
+
+      return new EventEntity(
+        obj._id,
+        obj.title,
+        obj.notes,
+        obj.start,
+        obj.end,
+        user
+      );
+    });
   }
 }
