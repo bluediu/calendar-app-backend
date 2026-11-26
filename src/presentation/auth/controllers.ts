@@ -32,7 +32,7 @@ export class AuthController extends ErrorHandler {
   };
 
   renewToken = (req: Request, res: Response) => {
-    const renewTokenDto = RenewTokenDto.renew(req.body.user);
+    const renewTokenDto = RenewTokenDto.renew(res.locals.user);
 
     new RenewToken(this.authRepository)
       .execute(renewTokenDto)

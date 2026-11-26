@@ -1,4 +1,6 @@
+import { SignOptions } from 'jsonwebtoken';
+
 export type TSignToken = (
   payload: Object,
-  duration?: string
+  duration?: SignOptions['expiresIn']
 ) => Promise<string | null>;

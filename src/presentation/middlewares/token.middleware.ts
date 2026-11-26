@@ -26,7 +26,7 @@ export class TokenMiddleware {
           .status(401)
           .json({ error: 'Invalid token - user not found' });
 
-      req.body.user = user;
+      res.locals.user = user;
       next();
     } catch (error) {
       console.error(error);
