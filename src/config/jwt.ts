@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken';
+import jwt, { SignOptions } from 'jsonwebtoken';
 import { envs } from './envs';
 
 const JWT_SEED = envs.SECRETORPRIVATEKEY;
@@ -6,7 +6,7 @@ const JWT_SEED = envs.SECRETORPRIVATEKEY;
 export class JwtAdapter {
   static async generateToken(
     payload: Object,
-    duration: string = '5d'
+    duration: SignOptions['expiresIn'] = '5d'
   ): Promise<string | null> {
     return new Promise((resolve) => {
       jwt.sign(payload, JWT_SEED, { expiresIn: duration }, (err, token) => {

@@ -1,0 +1,29 @@
+services:
+  api-dev:
+    profiles: ['dev']
+    build:
+      context: .
+      target: dev
+    env_file: .env
+    ports:
+      - '${PORT:-8080}:${PORT:-8080}'
+    # Se usa con: docker compose --profile dev up --watch
+    develop:
+      watch:
+        - action: sync
+          path: ./src
+          target: /app/src
+        - action: rebuild
+          path: package.json
+        - action: rebuild
+          path: yarn.lock
+
+  api-prod:
+    profiles: ['prod']
+    build:
+      context: .
+      target: prod
+    env_file: .env
+    ports:
+      - '${PORT:-8080}:${PORT:-8080}'
+    restart: unless-stopped

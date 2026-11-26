@@ -34,7 +34,7 @@ export class EventController extends ErrorHandler {
       .catch((err) => this.handleError(err, res));
   };
 
-  updateEvent = (req: Request, res: Response) => {
+  updateEvent = (req: Request<{ uid: string }>, res: Response) => {
     const token = req.header('Authorization')!.split(' ').at(1)!;
 
     const props = {
@@ -49,7 +49,7 @@ export class EventController extends ErrorHandler {
       .catch((err) => this.handleError(err, res));
   };
 
-  deleteEvent = (req: Request, res: Response) => {
+  deleteEvent = (req: Request<{ uid: string }>, res: Response) => {
     const token = req.header('Authorization')!.split(' ').at(1)!;
 
     const props = {
